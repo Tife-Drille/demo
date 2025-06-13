@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARESIA -</title>
+    <link rel="icon" type="image/png" href="6.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf0 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .left-content {
+            z-index: 2;
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            letter-spacing: 3px;
+        }
+
+        .brand::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, #ff6b6b, #feca57);
+            margin-top: 8px;
+        }
+
+        .main-title {
+            font-size: 4rem;
+            font-weight: 300;
+            color: #2c3e50;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
+        }
+
+        .main-title strong {
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 400px;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .product-section {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-container {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 40px;
+        }
+
+        .product-container:hover {
+            transform: translateY(-20px);
+        }
+
+        .product-jar {
+            width: 280px;
+            height: 200px;
+            background: linear-gradient(145deg, #e6e9ed, #f8fafc);
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 
+                20px 20px 60px #d1d5db,
+                -20px -20px 60px #ffffff;
+            overflow: hidden;
+        }
+
+        .product-jar::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            height: 40px;
+            background: linear-gradient(135deg, #f1f3f4, #e8eaed);
+            border-radius: 15px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .product-jar::after {
+            content: '';
+            position: absolute;
+            top: 70px;
+            left: 30px;
+            right: 30px;
+            bottom: 30px;
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            border-radius: 10px;
+            box-shadow: inset 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .cream-texture {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            right: 40px;
+            height: 80px;
+            background: linear-gradient(135deg, #ffffff, #f1f3f4);
+            border-radius: 50px 50px 10px 10px;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+        }
+
+        .cream-texture::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 20px;
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .hand {
+            position: absolute;
+            bottom: -40px;
+            right: -20px;
+            width: 160px;
+            height: 120px;
+            background: linear-gradient(135deg, #fdbcb4, #faa2a2);
+            border-radius: 80px 40px 40px 20px;
+            transform: rotate(-15deg);
+            box-shadow: 0 10px 30px rgba(253, 188, 180, 0.3);
+        }
+
+        .hand::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            width: 25px;
+            height: 60px;
+            background: linear-gradient(135deg, #fdbcb4, #faa2a2);
+            border-radius: 15px;
+            transform: rotate(45deg);
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .circle-1 {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            top: 10%;
+            left: 80%;
+            animation-delay: 0s;
+        }
+
+        .circle-2 {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #feca57, #ff9ff3);
+            top: 70%;
+            left: 10%;
+            animation-delay: 2s;
+        }
+
+        .circle-3 {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #48cae4, #0077b6);
+            top: 30%;
+            left: 5%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+
+        .side-text {
+            position: absolute;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            line-height: 1.6;
+            max-width: 200px;
+        }
+
+        .background-text {
+            position: absolute;
+            font-size: 12rem;
+            font-weight: 900;
+            color: rgba(54, 39, 39, 0.02);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            letter-spacing: -8px;
+            user-select: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 40px 20px;
+            }
+            
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .product-jar {
+                width: 220px;
+                height: 160px;
+            }
+            
+            .side-text {
+                position: static;
+                transform: none;
+                margin-top: 20px;
+                text-align: center;
+            }
+            
+            .background-text {
+                font-size: 6rem;
+            }
+        }
+
+.nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links li a:hover {
+            color: #667eea;
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links li a:hover::after {
+            width: 100%;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+            <a href="log in.html" class="login-btn">Log In</a>
+        </div>
+    </nav>
+
+
+    <div class="background-text">ARESIA</div>
+    
+    <div class="container">
+        <div class="left-content">
+            <div class="brand">ARESIA</div>
+            <h1 class="main-title">
+                Your healthiest<br>
+                <strong>skin revealed.</strong>
+            </h1>
+            <i>
+                <p class="description">
+                We strip away the unnecessary to focus on what truly works. 
+                Experience the pure essence of skincare science.
+            </p>
+            </i>
+            <button class="cta-button">Discover Your Routine</button>
+        </div>
+        
+        <div class="product-section">
+            <div class="floating-elements">
+                <div class="floating-circle circle-1"></div>
+                <div class="floating-circle circle-2"></div>
+                <div class="floating-circle circle-3"></div>
+            </div>
+            
+            <div class="product-container">
+                <div class="product-jar">
+                    <div class="cream-texture"></div>
+                </div>
+                <div class="hand"></div>
+            </div>
+            
+            <div class="side-text">
+                We formulate →<br>
+                with pure intention.<br><br>
+                Every ingredient<br>
+                serves a purpose.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth cursor interaction
+        const productContainer = document.querySelector('.product-container');
+        const floatingElements = document.querySelectorAll('.floating-circle');
+        
+        productContainer.addEventListener('mouseenter', () => {
+            floatingElements.forEach((circle, index) => {
+                circle.style.animationPlayState = 'paused';
+                circle.style.transform = `translateY(-${(index + 1) * 10}px) scale(1.1)`;
+            });
+        });
+        
+        productContainer.addEventListener('mouseleave', () => {
+            floatingElements.forEach(circle => {
+                circle.style.animationPlayState = 'running';
+                circle.style.transform = '';
+            });
+        });
+
+        // Add parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            
+            floatingElements.forEach((circle, index) => {
+                const speed = (index + 1) * 0.02;
+                circle.style.transform += ` translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
